@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import '../styles/WatchList.css';
+import '../styles/Watchlist.css';
 import { removeMovieFromFavorites } from '../firebaseUtils';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
