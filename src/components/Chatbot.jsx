@@ -41,7 +41,7 @@ export default function Chatbot() {
     <>
       {/* Floating chat bubble */}
       <div className="chatbot-button" onClick={() => setOpen(!open)}>
-        <img src="/public/assets/icons/chat_bubble.svg" alt="" className="icon" />
+        <img src="/assets/icons/chat_bubble.svg" alt="" className="icon" />
       </div>
 
       {/* Chat window */}
