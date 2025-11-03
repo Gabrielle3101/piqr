@@ -29,7 +29,7 @@ function Verify() {
     return (
         <div className="otp-verify">
         <div className="logo">
-            <img src="../../public/assets/img/logo.png" alt="" />
+            <img src="/assets/img/logo.png" alt="" />
         </div>
         <h1>Verify your email</h1>
         <p>Enter the 6 digit code we sent to your email</p>

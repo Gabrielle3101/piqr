@@ -86,8 +86,8 @@ function MovieDetail() {
             <div className="right-column">
                 <h1>{movie.title}</h1>
                 <div className="meta-info2">
-                <span><img src="/public/assets/icons/today-gray.png" alt="" className="icon" />{movie.release_date?.slice(0, 4)}</span>
-                <span><img src="/public/assets/icons/schedule-gray.png" alt="" className="icon" />{movie.runtime} min</span>
+                <span><img src="/assets/icons/today-gray.png" alt="" className="icon" />{movie.release_date?.slice(0, 4)}</span>
+                <span><img src="/assets/icons/schedule-gray.png" alt="" className="icon" />{movie.runtime} min</span>
                 </div>
                 <div className='rate'>
                     <span>⭐ {movie.vote_average?.toFixed(1)}/10</span>

@@ -87,15 +87,15 @@ function WatchList() {
                   <div className="movie-title">{movie.title}</div>
                   <div className="meta-info">
                     <span>
-                      <img src="/public/assets/icons/today.svg" alt="" className="icon" />
+                      <img src="/assets/icons/today.svg" alt="" className="icon" />
                       {movie.release_date?.slice(0, 4)}
                     </span>
                     <span>
-                        <img src="/public/assets/icons/schedule.svg" alt="" className="icon" />
+                        <img src="/assets/icons/schedule.svg" alt="" className="icon" />
                         {movie.runtime ? `${movie.runtime} min` : '—'}
                     </span>
                     <span>
-                      <img src="/public/assets/icons/star.svg" alt="" className="icon" />
+                      <img src="/assets/icons/star.svg" alt="" className="icon" />
                       {movie.vote_average?.toFixed(1)}
                     </span>
                   </div>

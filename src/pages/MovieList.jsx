@@ -106,9 +106,9 @@ function MovieList() {
                             <div className="genre-tag">{genre}</div>
                             <div className="movie-title">{movie.title}</div>
                             <div className="meta-info">
-                            <span><img src="/public/assets/icons/today.svg" alt="" className="icon" />{movie.release_date?.slice(0, 4)}</span>
+                            <span><img src="/assets/icons/today.svg" alt="" className="icon" />{movie.release_date?.slice(0, 4)}</span>
                             <span>{movie.runtime ? `${movie.runtime} min` : '—'}</span>
-                            <span><img src="/public/assets/icons/star.svg" alt="" className="icon" /> {movie.vote_average?.toFixed(1)}</span>
+                            <span><img src="/assets/icons/star.svg" alt="" className="icon" /> {movie.vote_average?.toFixed(1)}</span>
                             </div>
                         </div>
                         <div className="card-details">

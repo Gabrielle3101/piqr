@@ -76,7 +76,7 @@ function AuthPage() {
         <>
             <div className="auth">
                 <div className="auth-img">
-                    <img src="../../public/assets/img/sign-up-img.png" alt="" />
+                    <img src="/assets/img/sign-up-img.png" alt="" />
                 </div>
                 <div className="form">
                     <div className="logo">
@@ -135,7 +135,7 @@ function AuthPage() {
                     <div class="divider">
                         <span>Or</span>
                     </div>
-                    <button style={{display: "flex", alignItems: "center", justifyContent: "center"}} className="secondary-btn" onClick={handleGoogleSignIn}><img className="icon" src="../../public/assets/icons/devicon_google.svg" alt="" /> &nbsp; Continue with Google</button>
+                    <button style={{display: "flex", alignItems: "center", justifyContent: "center"}} className="secondary-btn" onClick={handleGoogleSignIn}><img className="icon" src="/assets/icons/devicon_google.svg" alt="" /> &nbsp; Continue with Google</button>
                     {error && <p style={{ color: "red" }}>{error}</p>}
                     <p className="cta2">
                         {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}

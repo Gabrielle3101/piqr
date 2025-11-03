@@ -35,21 +35,21 @@ function LandingPage() {
             </button>
             <div className="features">
               <p>
-                <img src="../../public/assets/icons/double-ticks.svg" alt="" className="icon" />
+                <img src="/assets/icons/double-ticks.svg" alt="" className="icon" />
                 Smart mood matcher
               </p>
               <p>
-                <img src="../../public/assets/icons/double-ticks.svg" alt="" className="icon" />
+                <img src="/assets/icons/double-ticks.svg" alt="" className="icon" />
                 Movie + Meal Combos
               </p>
               <p>
-                <img src="../../public/assets/icons/double-ticks.svg" alt="" className="icon" />
+                <img src="/assets/icons/double-ticks.svg" alt="" className="icon" />
                 Seamless, stress-free choices
               </p>
             </div>
           </div>
           <div className="hero-img">
-            <img src="../../public/assets/img/hero-img.png" alt="" />
+            <img src="/assets/img/hero-img.png" alt="" />
           </div>
         </div>
       </div>
