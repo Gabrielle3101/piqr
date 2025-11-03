@@ -1,0 +1,43 @@
+.otp-verify {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.otp-verify .logo img {
+    width: 76.87px;
+    height: 80px;
+    margin-bottom: 30px;
+}
+
+.otp-verify h1 {
+    font-weight: 600;
+    font-size: 36px;
+    font-family: 'Geist', sans-serif;
+}
+
+.otp-verify p {
+    margin: 20px 0 40px;
+    color: #525252;
+    width: 440px;
+    text-align: center;
+}
+
+.otp-verify button {
+    width: 450px;
+    margin: 30px 0;
+}
+
+.otp-verify h5 {
+    font-weight: 400;
+    font-size: 14px;
+    font-family: 'Geist', sans-serif;
+}
+
+.otp-verify h5 span {
+    color: var(--primary);
+    font-weight: 600;
+}

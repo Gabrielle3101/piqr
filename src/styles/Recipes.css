@@ -1,0 +1,11 @@
+
+
+.recipes {
+    width: -webkit-fill-available;
+    padding: 50px;
+}
+
+.recipes .none-saved img {
+    width: 84.56543731689453px;
+    height: 90px;
+}

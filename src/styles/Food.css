@@ -1,0 +1,80 @@
+.Food {
+    padding: 50px 30px;
+}
+
+.Food h1 {
+    font-weight: 500;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.Food .Food-options {
+    border-radius: 20px;
+    background-color: var(--selection-bg);
+    width: 574.05px;
+    min-height: 300px;
+    margin: 20px 0;
+}
+
+.Food .Food-options h2 {
+    display: flex;
+    align-items: center;
+    background: var(--linear-gradient2);
+    border-radius: 20px 20px 0 0;
+    padding: 15px;
+    color: var(--bg-color);
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.Food .Food-options h2 .icon {
+    margin-right: 10px;
+    width: 24px;
+    height: 24px;
+}
+
+.Food .Food-options form {
+    padding: 20px;
+}
+
+.radio-group {
+    margin-bottom: 20px;
+}
+
+.radio-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.radio-options {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+.radio-circle {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--txt-color);
+    border-radius: 50%;
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.radio-circle .dot {
+    width: 12px;
+    height: 12px;
+    background-color: var(--txt-color);
+    border-radius: 50%;
+}

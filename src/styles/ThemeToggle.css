@@ -1,0 +1,26 @@
+.theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: var(--primary);
+    /* padding: 10px; */
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle img {
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover img {
+    transform: rotate(180deg);
+}

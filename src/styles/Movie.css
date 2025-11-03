@@ -1,0 +1,95 @@
+.movie {
+    padding: 50px 30px;
+}
+
+.movie h1 {
+    font-weight: 500;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.movie .movie-options {
+    border-radius: 20px;
+    background-color: var(--selection-bg);
+    width: 574.05px;
+    height: 300px;
+    margin: 20px 0;
+}
+
+.movie .movie-options h2 {
+    display: flex;
+    align-items: center;
+    background: var(--linear-gradient1);
+    border-radius: 20px 20px 0 0;
+    padding: 15px;
+    color: var(--bg-color);
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.movie .movie-options h2 .icon {
+    margin-right: 10px;
+    width: 24px;
+    height: 24px;
+}
+
+.movie .movie-options form {
+    padding: 20px;
+}
+
+input.primary-btn {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 8px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.dropdown label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.dropdown-header {
+    background: var(--txt-color);
+    color: var(--bg-color);
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-list {
+    position: absolute;
+    top: 130%;
+    left: 0;
+    right: 0;
+    background: var(--bg-color);
+    border-radius: 12px;
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 0 0 6px 6px;
+}
+
+.dropdown-list li {
+    padding: 10px;
+    color: var(--txt-color);
+    cursor: pointer;
+}
+
+.dropdown-list li:hover {
+    background: var(--active-sidebar-link);
+}
+
+.arrow {
+    margin-left: 10px;
+}

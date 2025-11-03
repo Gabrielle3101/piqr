@@ -1,0 +1,68 @@
+.surprise {
+    padding: 2rem;
+    width: -webkit-fill-available;
+}
+
+.surprise .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.surprise-card {
+    margin-top: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.surprise-card button {
+    margin-right: 20px;
+    padding: 5px 15px;
+    font-size: 12px;
+}
+
+.surprise-card .image-wrapper {
+    height: 600px;
+}
+
+.surprise .image-wrapper img {
+    width: 400px;
+    height: 600px;
+    border-radius: 12px;
+}
+
+.surprise h2 {
+    font-weight: 500;
+    font-size: 32px;
+    margin-top: 20px;
+}
+
+.surprise .overview {
+    margin: 1rem 0;
+    font-size: 14px;
+    color: var(--txt-color);
+    width: 400px;
+}
+
+.loading {
+    margin-top: 2rem;
+    font-style: italic;
+}
+
+.choice-buttons {
+    margin: 20px 0;
+}
+
+.choice-buttons button {
+    margin-right: 20px;
+}
+
+.surprise button {
+    transition: all .2s ease;
+}
+
+.surprise button:hover {
+    scale: 1.1;
+}

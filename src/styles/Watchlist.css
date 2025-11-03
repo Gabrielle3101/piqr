@@ -1,0 +1,88 @@
+
+
+.watchlist {
+    width: -webkit-fill-available;
+    padding: 50px;
+}
+
+.none-saved {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: -webkit-fill-available;
+    height: 70%;
+}
+
+.watchlist .none-saved img {
+    width: 84.56543731689453px;
+    height: 90px;
+}
+
+.none-saved h4 {
+    font-weight: 400;
+    font-size: 16px;
+    margin: 20px 0;
+}
+
+.none-saved p {
+    color: var(--gray2);
+    font-size: 16px;
+}
+
+.none-saved button {
+    width: 80%;
+    margin-top: 30px;
+}
+
+.placeholder {
+    font-size: 12px;
+    color: var(--gray1);
+}
+
+.fav-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 20px 0;
+    gap: 10px;
+}
+
+.fav-card {
+    background-color: var(--selection-bg);
+    border-radius: 20px;
+    transition: all .2s ease;
+}
+
+.fav-card:hover {
+    transform: translateY(-10px);
+}
+
+.fav-card img {
+    border-radius: 20px 20px 0 0;
+}
+
+.primary-btn.red {
+    background-color: var(--error);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 12px;
+    transition: all .2s ease;
+}
+
+.primary-btn.red:hover {
+    background-color: var(--txt-color);
+    color: var(--error);
+}
+
+.primary-btn.red .icon {
+    margin-right: 10px;
+    width: 14px;
+    height: 14px;
+}
+
+.watchlist .overview, .recipes .overview {
+    font-size: 12px;
+    margin: 20px 0;
+}
