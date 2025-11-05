@@ -59,8 +59,12 @@ hr {
     border-radius: 12px;
     width: 370px;
     border: none;
-    background-color: var(--txt-color);
-    color: var(--bg-color);
+    background-color: var(--active-sidebar-link);
+    color: var(--txt-color);
+    outline: none;
+}
+.profile input:focus{
+    outline: 1px solid var(--txt-color);
 }
 .profile .actions {
     display: flex;

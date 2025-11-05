@@ -8,12 +8,28 @@ import { addRecipeToFavorites } from '../firebaseUtils';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+function FallbackImage({ src, alt, fallback = '/assets/img/food-placeholder.png', ...props }) {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      onError={(e) => {
+        if (e.target.src !== fallback) {
+          e.target.src = fallback;
+        }
+      }}
+      {...props}
+    />
+  );
+}
+
 function FoodList() {
   const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const { selectedTime, selectedType, prepType, spiceLevel } = location.state || {};
   const [foods, setFoods] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const handleLike = async (food) => {
     if (!user) {
@@ -40,7 +56,8 @@ function FoodList() {
 
   const fetchFoods = async () => {
     if (!selectedType || !selectedTime) return;
-
+  
+    setLoading(true);
     try {
       const response = await fetch(
         `http://localhost:5000/api/recipes?q=${selectedType.toLowerCase()}&mealType=${selectedTime.toLowerCase()}&to=10`
@@ -50,6 +67,8 @@ function FoodList() {
       setFoods(shuffled.slice(0, 4));
     } catch (error) {
       console.error('Error fetching foods:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -74,7 +93,27 @@ function FoodList() {
         <Link to="/food">🡠 Back</Link>
 
         <div className="card-grid">
-          {foods.length > 0 ? (
+          {loading ? (
+            [...Array(4)].map((_, i) => (
+              <div className="card-wrapper skeleton" key={i}>
+                <div className="card">
+                  <div className="image-wrapper skeleton-box" />
+                  <div className="tag top-left skeleton-text" />
+                  <div className="tag top-right skeleton-text" />
+                  <div className="food-title skeleton-text" />
+                  <div className="meta-info skeleton-text" />
+                  <div className="card-details">
+                    <p className="overview skeleton-text" />
+                    <p className="click-info skeleton-text" />
+                  </div>
+                </div>
+                <div className="action-buttons outside">
+                  <button className="like-btn skeleton-btn" disabled>Like</button>
+                  <button className="share-btn skeleton-btn" disabled>Share</button>
+                </div>
+              </div>
+            ))
+          ) : foods.length > 0 ? (
             foods.map((item, index) => {
               const food = item.recipe;
               return (
@@ -94,7 +133,7 @@ function FoodList() {
                     }
                   >
                     <div className="image-wrapper">
-                      <img src={food.image} alt={food.label} />
+                      <FallbackImage src={food.image} alt={food.label} />
                       <div className="tag top-left">{selectedType}</div>
                       <div className="tag top-right">{prepType}</div>
                       <div className="food-title">{food.label}</div>

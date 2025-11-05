@@ -173,3 +173,34 @@
 .action-buttons button:hover {
     scale: 1.1;
 }
+
+.skeleton .skeleton-box {
+    width: 100%;
+    height: 300px;
+    background-color: #ccc;
+    border-radius: 12px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-text {
+    height: 16px;
+    background-color: #ccc;
+    border-radius: 8px;
+    margin: 8px 0;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-btn {
+    background-color: #ccc;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: not-allowed;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}

@@ -9,6 +9,21 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useTheme from '../hooks/useTheme';
 
+function FallbackImage({ src, alt, fallback = '/assets/img/food-placeholder.png', ...props }) {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      onError={(e) => {
+        if (e.target.src !== fallback) {
+          e.target.src = fallback;
+        }
+      }}
+      {...props}
+    />
+  );
+}
+
 function FoodDetail() {
   const { user } = useAuth();
   const location = useLocation();
@@ -66,7 +81,7 @@ function FoodDetail() {
           {/* Left Column */}
           <div className="left-column">
             <div className="image-wrapper">
-              <img src={food.image} alt={food.label} />
+              <FallbackImage src={food.image} alt={food.label} />
               <div className="tag top-right">{prepType}</div>
             </div>
           </div>

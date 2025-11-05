@@ -11,6 +11,27 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useTheme from '../hooks/useTheme';
 
+function FallbackImage({ src, alt, fallback = '/assets/img/food-placeholder.png', ...props }) {
+  const [imgSrc, setImgSrc] = useState(src);
+
+  useEffect(() => {
+    setImgSrc(src);
+  }, [src]);
+
+  return (
+    <img
+      src={imgSrc}
+      alt={alt}
+      onError={(e) => {
+        if (e.target.src !== fallback) {
+          e.target.src = fallback;
+        }
+      }}
+      {...props}
+    />
+  );
+}
+
 function Recipes() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -67,7 +88,9 @@ function Recipes() {
             </button> 
           }
         </div>
-        <p className="placeholder">{savedRecipes.length} recipes saved</p>
+        {savedRecipes.length > 0 && (
+          <p className="placeholder">{savedRecipes.length} movies saved</p>
+        )}
 
         {savedRecipes.length > 0 ? (
           <div className="fav-cards">
@@ -84,7 +107,7 @@ function Recipes() {
                   }
                 >
                   <div className="image-wrapper">
-                    <img src={food.image} alt={food.label} />
+                    <FallbackImage src={food.image} alt={food.label} />
                     <div className="tag top-left">{selectedType}</div>
                     <div className="tag top-right">{prepType}</div>
                     <div className="food-title">{food.label}</div>

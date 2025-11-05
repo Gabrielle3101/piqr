@@ -31,6 +31,7 @@ function MovieList() {
     const navigate = useNavigate();
     const { genre, year } = location.state || {};
     const [movies, setMovies] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const handleLike = async (movie) => {
         if (!user) {
@@ -49,6 +50,7 @@ function MovieList() {
     
 
     const fetchMovies = async () => {
+        setLoading(true);
         const apiKey = '0185a0ad03a3db2ef4d9c66936a54152';
         const genreId = genreMap[genre];
         const decade = decadeMap[year];
@@ -56,14 +58,16 @@ function MovieList() {
         if (!genreId || !decade) return;
 
         try {
-        const response = await fetch(
-            `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}&primary_release_date.gte=${decade.start}&primary_release_date.lte=${decade.end}&include_adult=false`
-        );
-        const data = await response.json();
-        const shuffled = data.results.sort(() => 0.5 - Math.random());
-        setMovies(shuffled.slice(0, 4));
+            const response = await fetch(
+                `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}&primary_release_date.gte=${decade.start}&primary_release_date.lte=${decade.end}&include_adult=false`
+            );
+            const data = await response.json();
+            const shuffled = data.results.sort(() => 0.5 - Math.random());
+            setMovies(shuffled.slice(0, 4));
         } catch (error) {
-        console.error('Error fetching movies:', error);
+            console.error('Error fetching movies:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -90,51 +94,70 @@ function MovieList() {
             <Link to='/movie'>🡠 Back</Link>
 
             <div className="card-grid">
-            {movies.length > 0 ? (
-                movies.map((movie) => (
-                    <div className="card-wrapper" key={movie.id}>
-                        <div className="card" onClick={() => navigate(`/moviedetail/${movie.id}`)}>
-                        <div className="image-wrapper">
-                            <img
-                            src={
-                                movie.poster_path
-                                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                                : '/assets/icons/movie-placeholder.png'
-                            }
-                            alt={movie.title}
-                            />
-                            <div className="genre-tag">{genre}</div>
-                            <div className="movie-title">{movie.title}</div>
-                            <div className="meta-info">
-                            <span><img src="/assets/icons/today.svg" alt="" className="icon" />{movie.release_date?.slice(0, 4)}</span>
-                            <span>{movie.runtime ? `${movie.runtime} min` : '—'}</span>
-                            <span><img src="/assets/icons/star.svg" alt="" className="icon" /> {movie.vote_average?.toFixed(1)}</span>
-                            </div>
-                        </div>
+                {loading ? (
+                    [...Array(4)].map((_, i) => (
+                    <div className="card-wrapper skeleton" key={i}>
+                        <div className="card">
+                        <div className="image-wrapper skeleton-box" />
+                        <div className="genre-tag skeleton-text" />
+                        <div className="movie-title skeleton-text" />
+                        <div className="meta-info skeleton-text" />
                         <div className="card-details">
-                            <p className="overview">
-                            {movie.overview?.length > 120
-                                ? movie.overview.slice(0, 120) + '...'
-                                : movie.overview || 'No description available.'}
-                            </p>
-                            <p className="click-info">
-                            <img src={`${iconPath}info.svg`} alt="" className="icon" />
-                            Click card for detail view
-                            </p>
+                            <p className="overview skeleton-text" />
+                            <p className="click-info skeleton-text" />
                         </div>
                         </div>
-                    
                         <div className="action-buttons outside">
-                        <button className="like-btn" onClick={() => handleLike(movie)}>
-                            <img src={`${iconPath}favorite.svg`} alt="" className="icon" /> Like
-                        </button>
-                        <button className="share-btn"><img src={`${iconPath}share.svg`} alt="" className="icon" /> Share</button>
+                        <button className="like-btn skeleton-btn" disabled>Like</button>
+                        <button className="share-btn skeleton-btn" disabled>Share</button>
+                        </div>
                     </div>
-                </div>
-                ))
-            ) : (
-                <p className="no-results">No movies found for your selection.</p>
-            )}
+                    ))
+                ) : movies.length > 0 ? (
+                    movies.map((movie) => (
+                        <div className="card-wrapper" key={movie.id}>
+                            <div className="card" onClick={() => navigate(`/moviedetail/${movie.id}`)}>
+                            <div className="image-wrapper">
+                                <img
+                                src={
+                                    movie.poster_path
+                                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                                    : '/assets/icons/movie-placeholder.png'
+                                }
+                                alt={movie.title}
+                                />
+                                <div className="genre-tag">{genre}</div>
+                                <div className="movie-title">{movie.title}</div>
+                                <div className="meta-info">
+                                <span><img src="/assets/icons/today.svg" alt="" className="icon" />{movie.release_date?.slice(0, 4)}</span>
+                                <span>{movie.runtime ? `${movie.runtime} min` : '—'}</span>
+                                <span><img src="/assets/icons/star.svg" alt="" className="icon" /> {movie.vote_average?.toFixed(1)}</span>
+                                </div>
+                            </div>
+                            <div className="card-details">
+                                <p className="overview">
+                                {movie.overview?.length > 120
+                                    ? movie.overview.slice(0, 120) + '...'
+                                    : movie.overview || 'No description available.'}
+                                </p>
+                                <p className="click-info">
+                                <img src={`${iconPath}info.svg`} alt="" className="icon" />
+                                Click card for detail view
+                                </p>
+                            </div>
+                            </div>
+                        
+                            <div className="action-buttons outside">
+                            <button className="like-btn" onClick={() => handleLike(movie)}>
+                                <img src={`${iconPath}favorite.svg`} alt="" className="icon" /> Like
+                            </button>
+                            <button className="share-btn"><img src={`${iconPath}share.svg`} alt="" className="icon" /> Share</button>
+                        </div>
+                    </div>
+                    ))
+                ) : (
+                    <p className="no-results">No movies found for your selection.</p>
+                )}
             </div>
         </div>
         {user && <Chatbot />}

@@ -68,7 +68,9 @@ function WatchList() {
             </button>
           }
         </div>
-        <p className="placeholder">{savedMovies.length} movies saved</p>
+        {savedMovies.length > 0 && (
+          <p className="placeholder">{savedMovies.length} movies saved</p>
+        )}
 
         {savedMovies.length > 0 ? (
           <div className="fav-cards">
