@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./Chatbot.css";
 
 export default function Chatbot() {
@@ -6,6 +6,8 @@ export default function Chatbot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const bottomRef = useRef(null);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -37,6 +39,12 @@ export default function Chatbot() {
     if (e.key === "Enter") sendMessage();
   };
 
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, loading]);
+
   return (
     <>
       {/* Floating chat bubble */}
@@ -58,7 +66,12 @@ export default function Chatbot() {
                 <div className="message-text">{msg.text}</div>
               </div>
             ))}
-            {loading && <div className="chat-message bot"><div className="message-text">Typing...</div></div>}
+            {loading && (
+              <div className="chat-message bot">
+                <div className="message-text">Typing...</div>
+              </div>
+            )}
+            <div ref={bottomRef} />
           </div>
 
           <div className="chat-input">

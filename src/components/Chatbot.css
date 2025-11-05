@@ -19,10 +19,6 @@
   z-index: 999;
 }
 
-.chatbot-button:hover {
-  background-color: #0056b3;
-}
-
 /* Chat box container */
 .chatbot-box {
   position: fixed;
@@ -125,8 +121,4 @@
   padding: 8px 12px;
   cursor: pointer;
   font-size: 14px;
-}
-
-.chat-input button:hover {
-  background-color: #0056b3;
 }
