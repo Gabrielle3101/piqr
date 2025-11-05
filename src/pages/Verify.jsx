@@ -41,7 +41,9 @@ function Verify() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email }),
         })}>Resend code</span></h5>
-        <ThemeToggle />
+        <div className="theme">
+            <ThemeToggle />
+        </div>
         </div>
     );
 }

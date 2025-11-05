@@ -72,7 +72,7 @@ function MovieDetail() {
             <div className="header-row">
                 <h1>Here are your picks</h1>
             </div>
-            <Link className='back' to='/movie'>← Back</Link>
+            <Link className='back' to='/movie'>🡠 Back</Link>
             <div className="columns">
             {/* Left Column */}
             <div className="left-column">

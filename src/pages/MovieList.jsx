@@ -87,7 +87,7 @@ function MovieList() {
                     Refresh <img src={`${iconPath}refresh.svg`} alt="" className="icon" />
                 </button>
             </div>
-            <Link to='/movie'>← Back</Link>
+            <Link to='/movie'>🡠 Back</Link>
 
             <div className="card-grid">
             {movies.length > 0 ? (

@@ -1,5 +1,6 @@
 .lp {
-    max-width: 100vw;
+    max-width: 1200px;
+    align-self: center;
     height: 100vh;
     padding: 1.25rem 5rem;
     background-color: var(--bg-color);
@@ -77,3 +78,11 @@
     width: 100%;
 }
 
+.lp .navbar div {
+    display: flex;
+    align-items: center;
+}
+
+.lp .navbar .primary-btn {
+    margin-left: 30px;
+}

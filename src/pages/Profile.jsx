@@ -20,32 +20,34 @@ function Profile() {
   const [photo, setPhoto] = useState(user.photoURL || '');
   const [email, setEmail] = useState(user.email || '');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSave = async () => {
+    setLoading(true);
     try {
       if (email !== user.email) {
         const credential = EmailAuthProvider.credential(user.email, password);
         await reauthenticateWithCredential(user, credential);
         await updateEmail(user, email);
       }
-
-      await updateProfile(user, {
-        displayName: name,
-      });
-
+  
+      await updateProfile(user, { displayName: name });
+  
       const userRef = doc(db, 'users', user.uid);
       await updateDoc(userRef, {
         displayName: name,
         photoURL: photo,
         email: email
       });
-
+  
       toast.info("Profile updated!");
     } catch (err) {
       console.error("Error updating profile:", err);
       toast.error("Failed to update profile.");
+    } finally {
+      setLoading(false);
     }
-  };
+  };  
 
   const theme = useTheme();
 
@@ -136,8 +138,12 @@ function Profile() {
           />
           <hr />
           <div className="actions">
-            <button className="secondary-btn" onClick={handleCancel}>Cancel</button>
-            <button className="primary-btn" onClick={handleSave}>Save Changes</button>
+            <button className="secondary-btn" onClick={handleCancel} disabled={loading}>
+              Cancel
+            </button>
+            <button className="primary-btn" onClick={handleSave} disabled={loading}>
+              {loading ? "Saving..." : "Save Changes"}
+            </button>
           </div>
         </div>
       </div>

@@ -1,9 +1,5 @@
 .theme-toggle {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
     background-color: var(--primary);
-    /* padding: 10px; */
     border-radius: 50%;
     cursor: pointer;
     z-index: 1000;
@@ -18,9 +14,8 @@
 .theme-toggle img {
     width: 24px;
     height: 24px;
-    transition: all 0.3s ease;
 }
 
-.theme-toggle:hover img {
-    transform: rotate(180deg);
+.theme-toggle:hover {
+    transform: translateY(-10px);
 }

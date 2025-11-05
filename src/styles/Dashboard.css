@@ -46,11 +46,11 @@ a {
     width: 290px;
     height: 262px;
     margin-right: 20px;
+    transition: all .4s ease;
 }
 
 .dashboard .options a:hover {
     transform: translateY(-10px);
-    transition: all .4s ease;
 }
 
 .dashboard .options a.second-opt {

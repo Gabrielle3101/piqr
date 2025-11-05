@@ -40,4 +40,15 @@
 .otp-verify h5 span {
     color: var(--primary);
     font-weight: 600;
+    cursor: pointer;
+}
+
+.otp-verify h5 span:hover {
+    text-decoration: underline;
+}
+
+.theme {
+    position: fixed;
+    top: 20px;
+    right: 20px;
 }
