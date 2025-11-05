@@ -13,10 +13,10 @@ function LoginModal() {
         <p>The feature you’re trying to access is not available till you login/signup</p>
         <div className="modal-actions">
           <button className="back" onClick={() => navigate(-1)}>
-            ←
+            🡠
           </button>
           <button className="primary-btn" onClick={() => navigate('/auth')}>
-            Proceed to Login →
+            Sign Up/Log In
           </button>
         </div>
       </div>

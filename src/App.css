@@ -129,6 +129,8 @@ body.neon {
 
 .all {
     width: 100vw;
+    display: flex;
+    justify-content: center;
 }
 
 button {
@@ -165,6 +167,8 @@ a {
 body {
     background-color: var(--bg-color);
     color: var(--txt-color);
+    max-width: 100vw;
+    overflow: hidden;
 }
 
 .custom-toast {

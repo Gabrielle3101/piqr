@@ -81,7 +81,7 @@ function Food() {
       <Sidebar />
       <div className="Food">
         <h1>What are you in the mood for?</h1>
-        <Link to='/dashboard'>← Back</Link>
+        <Link to='/dashboard'>🡠 Back</Link>
 
         <div className="Food-options">
           <h2>

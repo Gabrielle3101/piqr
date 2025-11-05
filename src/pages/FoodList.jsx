@@ -71,7 +71,7 @@ function FoodList() {
             Refresh <img src={`${iconPath}refresh.svg`} alt="" className="icon" />
           </button>
         </div>
-        <Link to="/food">← Back</Link>
+        <Link to="/food">🡠 Back</Link>
 
         <div className="card-grid">
           {foods.length > 0 ? (

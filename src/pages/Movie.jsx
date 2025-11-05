@@ -59,7 +59,7 @@ function Movie() {
       <Sidebar />
       <div className="movie">
         <h1>What are you in the mood for?</h1>
-        <Link to='/dashboard'>← Back</Link>
+        <Link to='/dashboard'>🡠 Back</Link>
 
         <div className="movie-options">
           <h2>

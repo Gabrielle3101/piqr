@@ -12,8 +12,6 @@ function Sidebar() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const [showOptions, setShowOptions] = useState(false);
-
     const handleLogout = async () => {
         await logout();
         navigate('/')
@@ -76,29 +74,28 @@ function Sidebar() {
                     </Link>
                 </div>
 
-                <div className="sidebar-bottom">
-                {showOptions && (
-                    <div className="bottom-options">
-                        {user && (
+                <div className="bottom-options">
+                    {user && (
                         <button onClick={handleLogout}>
-                            <img src={`${iconPath}logout.svg`} alt="" className="icon" />
-                            Log out
+                        <img src={`${iconPath}logout.svg`} alt="" className="icon" />
+                        Log out
                         </button>
-                        )}
-                        <div className="theme-selector">
-                            <img src={`${iconPath}bulb.svg`} alt="" className="icon" />
-                            <select onChange={(e) => setTheme(e.target.value)} defaultValue={localStorage.getItem('theme') || 'light'}>
-                                <option value="light">Light Mode</option>
-                                <option value="dark">Dark Mode</option>
-                                <option value="sunset">Sunset</option>
-                                <option value="neon">Neon</option>
-                                <option value="bloodred">Blood Red</option>
-                                <option value="pinkgummy">Pink Gummy</option>
-                            </select>
-                        </div>
+                    )}
+                    <div className="theme-selector">
+                        <img src={`${iconPath}bulb.svg`} alt="" className="icon" />
+                        <select onChange={(e) => setTheme(e.target.value)} defaultValue={localStorage.getItem('theme') || 'light'}>
+                        <option value="light">Light Mode</option>
+                        <option value="dark">Dark Mode</option>
+                        <option value="sunset">Sunset</option>
+                        <option value="neon">Neon</option>
+                        <option value="bloodred">Blood Red</option>
+                        <option value="pinkgummy">Pink Gummy</option>
+                        </select>
                     </div>
-                )}
-                    <div className="open-bottom-options" onClick={() => setShowOptions(prev => !prev)}>
+                </div>
+
+                <div className="sidebar-bottom">
+                    <div className="open-bottom-options">
                     <div className="user-img">
                         {photoURL ? (
                             <img src={photoURL} alt="Profile" className="pfp" />
@@ -106,7 +103,7 @@ function Sidebar() {
                             user?.displayName?.charAt(0).toUpperCase() || "G"
                         )}
                     </div>
-                        <span>{user?.displayName || "Guest"} {showOptions ? '▼' : '▲'}</span>
+                        <span>{user?.displayName || "Guest"}</span>
                     </div>
                 </div>
             </div>

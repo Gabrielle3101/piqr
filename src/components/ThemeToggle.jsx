@@ -15,9 +15,13 @@ function ThemeToggle() {
         setIsLight(prev => !prev);
     };
 
+    const iconSrc = isLight
+    ? '/assets/icons/sun.png'
+    : '/assets/icons/moon.png';
+
     return (
         <div className="theme-toggle" onClick={handleToggle} title="Switch theme">
-            <img src="/assets/icons/bulb.svg" alt="Toggle theme" />
+            <img src={iconSrc} alt="Toggle theme" />
         </div>
     );
 }

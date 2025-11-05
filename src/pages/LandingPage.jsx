@@ -12,15 +12,19 @@ function LandingPage() {
   return (
     <>
       <div className="lp">
-        <div className="navbar">
+        <header className="navbar">
           <div className="logo">
           <img src={`${imgPath}logo.png`} alt="" className="logo-img" />
             <span className="logo-txt">Piqr</span>
           </div>
-          <button onClick={() => navigate("/auth")} className="primary-btn">
-            Get Started
-          </button>
-        </div>
+          <div>
+            <ThemeToggle />
+            <button onClick={() => navigate("/auth")} className="primary-btn">
+              Get Started
+            </button>
+          </div>
+            
+        </header>
         <div className="hero-section">
           <div className="hero-info">
             <h1>Decisions <span>made Simple.</span></h1>
@@ -53,7 +57,6 @@ function LandingPage() {
           </div>
         </div>
       </div>
-      <ThemeToggle />
     </>
   );
 }
