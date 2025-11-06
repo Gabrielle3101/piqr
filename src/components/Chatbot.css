@@ -25,6 +25,7 @@
   bottom: 90px;
   right: 20px;
   width: 320px;
+  min-height: 475px;
   background: var(--bg-color);
   border: 1px solid var(--txt-color);
   display: flex;
@@ -103,12 +104,13 @@
   background-color: var(--bg-color);
 }
 
-.chat-input input {
+.chat-input textarea {
   flex: 1;
   border: 1px solid var(--txt-color);
   border-radius: 6px;
   padding: 8px;
   font-size: 14px;
+  height: 40px;
   outline: none;
 }
 

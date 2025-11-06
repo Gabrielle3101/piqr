@@ -75,7 +75,7 @@ export default function Chatbot() {
           </div>
 
           <div className="chat-input">
-            <input
+            <textarea
               type="text"
               placeholder="Ask me anything..."
               value={input}

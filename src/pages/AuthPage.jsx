@@ -24,11 +24,13 @@ function AuthPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const provider = new GoogleAuthProvider();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
     try {
       if (isSignUp) {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -42,28 +44,33 @@ function AuthPage() {
         navigate("/verify", { state: { email } });
       } else {
         await signInWithEmailAndPassword(auth, email, password);
-
         await fetch("http://localhost:5000/send-otp", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
         });
-
         navigate("/verify", { state: { email } });
-
       }
     } catch (err) {
-      setError(err.message);
+      const msg = err.message.replace("Firebase:", "").trim();
+      setError(msg);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleGoogleSignIn = async () => {
+    setError("");
+    setLoading(true);
     try {
       await signInWithPopup(auth, provider);
       await createUserDocument(auth.currentUser);
       navigate("/dashboard");
     } catch (err) {
-      setError(err.message);
+      const msg = err.message.replace("Firebase:", "").trim();
+      setError(msg);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -139,20 +146,27 @@ function AuthPage() {
                 onClick={() => setShowPassword(prev => !prev)}
               />
             </div>
+            {error && <p style={{ color: "red" }}>{error}</p>}
             <div style={{ display: "flex", alignItems: "center" }}>
               <input type="checkbox" id="checkbox" />
               <label style={{ cursor: "pointer", fontSize: "12px" }} htmlFor="checkbox">Remember me</label>
               <span style={{ marginLeft: "auto", cursor: "pointer", fontSize: "12px" }}>Forgotten password?</span>
             </div>
-            <button className="primary-btn" type="submit">{isSignUp ? "Sign Up" : "Log In"}</button>
+            <button className="primary-btn" type="submit" disabled={loading}>
+              {loading ? (isSignUp ? "Signing Up..." : "Logging In...") : isSignUp ? "Sign Up" : "Log In"}
+            </button>
           </form>
           <div className="divider">
             <span>Or</span>
           </div>
-          <button style={{ display: "flex", alignItems: "center", justifyContent: "center" }} className="secondary-btn" onClick={handleGoogleSignIn}>
+          <button
+            style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+            className="secondary-btn"
+            onClick={handleGoogleSignIn}
+            disabled={loading}
+          >
             <img className="icon" src="/assets/icons/devicon_google.svg" alt="" /> &nbsp; Continue with Google
           </button>
-          {error && <p style={{ color: "red" }}>{error}</p>}
           <p className="cta2">
             {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
             <span className="cta2" onClick={() => setIsSignUp(!isSignUp)}>
