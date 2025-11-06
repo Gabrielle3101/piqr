@@ -34,7 +34,7 @@ function Verify() {
         <h1>Verify your email</h1>
         <p>Enter the 6 digit code we sent to your email</p>
         <OTPInput onChange={setOtp} />
-        <button className="primary-btn" onClick={handleVerify}>Continue →</button>
+        <button className="primary-btn" onClick={handleVerify}>Continue 🡢</button>
         {error && <p style={{ color: "red" }}>{error}</p>}
         <h5>Didn't receive code? <span onClick={() => fetch("http://localhost:5000/send-otp", {
             method: "POST",

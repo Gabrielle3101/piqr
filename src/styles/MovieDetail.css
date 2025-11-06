@@ -1,5 +1,6 @@
 .movie-detail {
-    padding: 40px;
+    padding: 50px;
+    max-width: 1000px;
 }
 
 .header-row h1 {

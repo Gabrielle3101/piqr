@@ -39,6 +39,10 @@
     justify-content: space-between;
 }
 
+.lp .hero-info {
+    width: 30%;
+}
+
 .hero-info h1 {
     font-size: 3rem;
     font-weight: 600;
@@ -70,12 +74,9 @@
     margin-right: 10px;
 }
 
-.hero-img {
-    width: 50%;
-}
-
 .hero-img img {
-    width: 100%;
+    width: 573.56px;
+    height: 480.44px;
 }
 
 .lp .navbar div {

@@ -35,17 +35,26 @@ function FoodDetail() {
     spiceLevel
   } = location.state || {};
 
-    const theme = useTheme();
-  
-    const isLightMode = ['light', 'pinkgummy', 'sunset'].includes(theme);
+  const theme = useTheme();
+  const isLightMode = ['light', 'pinkgummy', 'sunset'].includes(theme);
+  const iconPath = isLightMode ? '/assets/icons/light/' : '/assets/icons/';
 
   const [food] = useState(recipe);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   const handleAddToCookbook = async () => {
     if (!user) {
       toast.info("Please log in to save items.");
       return;
     }
+
+    if (isSaved) {
+      toast.info("This recipe is already in your Cookbook.");
+      return;
+    }
+
+    setIsSaving(true);
 
     const recipeItem = {
       recipe: food,
@@ -58,15 +67,19 @@ function FoodDetail() {
     try {
       await addRecipeToFavorites(user.uid, recipeItem);
       toast.success("Recipe added to your Cookbook!");
+      setIsSaved(true);
     } catch (err) {
       console.error("Error saving recipe:", err);
       toast.error("Failed to save recipe.");
+    } finally {
+      setIsSaving(false);
     }
   };
-    
-  const iconPath = isLightMode ? '/assets/icons/light/' : '/assets/icons/';
 
   if (!food) return <p>No recipe data available.</p>;
+
+  const isOrderOut = prepType?.toLowerCase() === "order out (fast food)";
+  const isMakeAtHome = prepType?.toLowerCase() === "make it at home from scratch";
 
   return (
     <div className="page">
@@ -78,7 +91,6 @@ function FoodDetail() {
         <Link className="back" to="/foodlist">🡠 Back</Link>
 
         <div className="columns">
-          {/* Left Column */}
           <div className="left-column">
             <div className="image-wrapper">
               <FallbackImage src={food.image} alt={food.label} />
@@ -86,7 +98,6 @@ function FoodDetail() {
             </div>
           </div>
 
-          {/* Right Column */}
           <div className="right-column">
             <h1>{food.label}</h1>
             <div className="meta-info2">
@@ -100,7 +111,8 @@ function FoodDetail() {
               <span>{selectedType}</span>
               <span>{spiceLevel}</span>
             </div>
-            {prepType?.toLowerCase() === "make it at home from scratch" && (
+
+            {isMakeAtHome && (
               <div className="recipes-duration">
                 <img src={`${iconPath}schedule.svg`} alt="" className="icon" />
                 <p>
@@ -111,13 +123,24 @@ function FoodDetail() {
                 </p>
               </div>
             )}
-            <button className="favorite-btn primary-btn" onClick={handleAddToCookbook}>
-              Add to Cookbook
+
+            <button
+              className="favorite-btn primary-btn"
+              onClick={handleAddToCookbook}
+              disabled={isSaving || isSaved || isOrderOut}
+            >
+              {isOrderOut
+                ? "Order Out (Coming Soon)"
+                : isSaving
+                ? "Saving..."
+                : isSaved
+                ? "Saved"
+                : "Add to Cookbook"}
             </button>
           </div>
         </div>
 
-        {prepType?.toLowerCase() === "make it at home from scratch" && (
+        {isMakeAtHome && (
           <div className="additional-info">
             <h2>Recipes</h2>
             {food.ingredientLines?.length > 0 && (
@@ -137,8 +160,8 @@ function FoodDetail() {
         )}
       </div>
       {user && <Chatbot />}
-      <ToastContainer 
-        position="top-right" 
+      <ToastContainer
+        position="top-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
