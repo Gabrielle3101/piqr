@@ -30,13 +30,19 @@ function FoodList() {
   const { selectedTime, selectedType, prepType, spiceLevel } = location.state || {};
   const [foods, setFoods] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [likedRecipes, setLikedRecipes] = useState([]);
 
   const handleLike = async (food) => {
     if (!user) {
       toast.info("Please log in to like recipes.");
       return;
     }
-  
+
+    if (likedRecipes.includes(food.uri)) {
+      toast.info("You've already liked this recipe.");
+      return;
+    }
+
     const recipeItem = {
       recipe: food,
       prepType,
@@ -44,19 +50,43 @@ function FoodList() {
       selectedType,
       spiceLevel
     };
-  
+
     try {
       await addRecipeToFavorites(user.uid, recipeItem);
       toast.success("Recipe added to your Cookbook!");
+      setLikedRecipes((prev) => [...prev, food.uri]);
     } catch (err) {
       console.error("Error saving recipe:", err);
       toast.error("Failed to save recipe.");
     }
   };
 
+  const handleShare = async (uri) => {
+    const url = `${window.location.origin}/fooddetail/${encodeURIComponent(uri)}`;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Check out this recipe!',
+          url,
+        });
+      } catch (err) {
+        console.error('Share failed:', err);
+        toast.error("Sharing failed.");
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(url);
+        toast.success("Link copied to clipboard!");
+      } catch (err) {
+        console.error("Clipboard copy failed:", err);
+        toast.error("Failed to copy link.");
+      }
+    }
+  };
+
   const fetchFoods = async () => {
     if (!selectedType || !selectedTime) return;
-  
+
     setLoading(true);
     try {
       const response = await fetch(
@@ -77,7 +107,6 @@ function FoodList() {
   }, [selectedType, selectedTime]);
 
   const isLightMode = document.body.classList.contains('light');
-    
   const iconPath = isLightMode ? '/assets/icons/light/' : '/assets/icons/';
 
   return (
@@ -108,8 +137,8 @@ function FoodList() {
                   </div>
                 </div>
                 <div className="action-buttons outside">
-                  <button className="like-btn skeleton-btn" disabled>Like</button>
-                  <button className="share-btn skeleton-btn" disabled>Share</button>
+                  <button className="like-btn skeleton-btn" disabled></button>
+                  <button className="share-btn skeleton-btn" disabled></button>
                 </div>
               </div>
             ))
@@ -140,10 +169,12 @@ function FoodList() {
                       <div className="meta-info">
                         <span>{selectedTime}</span>
                         <span>{spiceLevel}</span>
-                        <span>
-                          <img src="/assets/icons/schedule.svg" alt="" className="icon" />
-                          {Math.round(food.totalTime) || '—'} min
-                        </span>
+                        {food.totalTime ? 
+                          <span>
+                            <img src="/assets/icons/schedule.svg" alt="" className="icon" />
+                            {Math.round(food.totalTime) || '—'} min
+                          </span> : ""}
+                        
                       </div>
                     </div>
 
@@ -161,10 +192,10 @@ function FoodList() {
                   </div>
 
                   <div className="action-buttons outside">
-                  <button className="like-btn" onClick={() => handleLike(food)}>
-                    <img src={`${iconPath}favorite.svg`} alt="" className="icon" /> Like
-                  </button>
-                    <button className="share-btn">
+                    <button className="like-btn" onClick={() => handleLike(food)}>
+                      <img src={`${iconPath}favorite.svg`} alt="" className="icon" /> {likedRecipes.includes(food.uri) ? "Liked" : "Like"}
+                    </button>
+                    <button className="share-btn" onClick={() => handleShare(food.uri)}>
                       <img src={`${iconPath}share.svg`} alt="" className="icon" /> Share
                     </button>
                   </div>
@@ -177,8 +208,8 @@ function FoodList() {
         </div>
       </div>
       {user && <Chatbot />}
-      <ToastContainer 
-        position="top-right" 
+      <ToastContainer
+        position="top-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}

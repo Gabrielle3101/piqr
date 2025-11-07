@@ -36,11 +36,13 @@ function Recipes() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [savedRecipes, setSavedRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSavedRecipes = async () => {
       if (!user) return;
 
+      setLoading(true);
       try {
         const userRef = doc(db, 'users', user.uid);
         const snapshot = await getDoc(userRef);
@@ -50,6 +52,8 @@ function Recipes() {
         }
       } catch (err) {
         console.error("Error fetching recipes:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -62,7 +66,7 @@ function Recipes() {
     try {
       await removeRecipeFromFavorites(user.uid, recipeToRemove);
       setSavedRecipes(prev => prev.filter(item => item.recipe.uri !== recipeToRemove.recipe.uri));
-      toast.success("Recipe removed successfully!")
+      toast.success("Recipe removed successfully!");
     } catch (err) {
       console.error("Error removing recipe:", err);
       toast.error("Failed to remove recipe.");
@@ -70,9 +74,7 @@ function Recipes() {
   };
 
   const theme = useTheme();
-
   const isLightMode = ['light', 'pinkgummy', 'sunset'].includes(theme);
-    
   const iconPath = isLightMode ? '/assets/icons/light/' : '/assets/icons/';
   const imgPath = isLightMode ? '/assets/img/light/' : '/assets/img/';
 
@@ -82,17 +84,33 @@ function Recipes() {
       <div className="recipes">
         <div className="header-row">
           <h1>My Recipes</h1>
-          {savedRecipes.length > 0 &&
+          {savedRecipes.length > 0 && !loading && (
             <button className="primary-btn" onClick={() => navigate('/food')}>
               Discover foods
-            </button> 
-          }
+            </button>
+          )}
         </div>
-        {savedRecipes.length > 0 && (
-          <p className="placeholder">{savedRecipes.length} movies saved</p>
+        {!loading && savedRecipes.length > 0 && (
+          <p className="placeholder">{savedRecipes.length} recipes saved</p>
         )}
 
-        {savedRecipes.length > 0 ? (
+        {loading ? (
+          <div className="fav-cards">
+            {[...Array(3)].map((_, i) => (
+              <div className="fav-card skeleton" key={i}>
+                <div className="image-wrapper skeleton-box" />
+                <div className="tag top-left skeleton-text" />
+                <div className="tag top-right skeleton-text" />
+                <div className="food-title skeleton-text" />
+                <div className="meta-info skeleton-text" />
+                <div className="card-details">
+                  <p className="overview skeleton-text" />
+                  <button className="primary-btn red skeleton-btn" disabled />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : savedRecipes.length > 0 ? (
           <div className="fav-cards">
             {savedRecipes.map((item, index) => {
               const { recipe: food, prepType, selectedTime, selectedType, spiceLevel } = item;
@@ -120,7 +138,6 @@ function Recipes() {
                       </span>
                     </div>
                   </div>
-
                   <div className="card-details">
                     <p className="overview">
                       {food.source?.length > 120
@@ -154,8 +171,8 @@ function Recipes() {
         )}
       </div>
       {user && <Chatbot />}
-      <ToastContainer 
-        position="top-right" 
+      <ToastContainer
+        position="top-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}

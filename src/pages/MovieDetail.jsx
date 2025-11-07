@@ -70,7 +70,55 @@ function MovieDetail() {
         fetchDetails();
     }, [id]);
 
-    if (!movie || !credits) return <p>Loading...</p>;
+    if (!movie || !credits) {
+        return (
+            <div className="page">
+                <Sidebar />
+                <div className="movie-detail">
+                <div className="header-row">
+                    <h1 className="skeleton-text" style={{ width: '200px' }} />
+                </div>
+                <Link className="back" to="/movie">🡠 Back</Link>
+                <div className="columns">
+                    <div className="left-column">
+                    <div className="image-wrapper skeleton-box" />
+                    <div className="genre-tag skeleton-text" />
+                    </div>
+                    <div className="right-column">
+                    <h1 className="skeleton-text" style={{ width: '60%' }} />
+                    <div className="meta-info2">
+                        <span className="skeleton-text" style={{ width: '80px' }} />
+                        <span className="skeleton-text" style={{ width: '80px' }} />
+                    </div>
+                    <div className="rate skeleton-text" style={{ width: '100px' }} />
+                    <h3 className="skeleton-text" style={{ width: '100px' }} />
+                    <p className="synopsis skeleton-text" style={{ height: '60px' }} />
+                    <h3 className="skeleton-text" style={{ width: '100px' }} />
+                    <p className="skeleton-text" style={{ width: '120px' }} />
+                    <h3 className="skeleton-text" style={{ width: '100px' }} />
+                    <div className="cast-names">
+                        {[...Array(3)].map((_, i) => (
+                        <span key={i} className="cast-name skeleton-text" style={{ width: '80px' }} />
+                        ))}
+                    </div>
+                    <button className="favorite-btn primary-btn skeleton-btn" disabled>Saving...</button>
+                    </div>
+                </div>
+                <div className="additional-info">
+                    <h2 className="skeleton-text" style={{ width: '200px' }} />
+                    <div className="infos">
+                    {[...Array(4)].map((_, i) => (
+                        <span key={i}>
+                        <p className="skeleton-text" style={{ width: '100px' }} />
+                        <p className="skeleton-text" style={{ width: '150px' }} />
+                        </span>
+                    ))}
+                    </div>
+                </div>
+                </div>
+            </div>
+        );
+    }
 
     const director = credits.crew.find(person => person.job === 'Director');
     const cast = credits.cast.slice(0, 3);

@@ -15,6 +15,7 @@ function WatchList() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [savedMovies, setSavedMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const handleRemove = async (movieToRemove) => {
     if (!user) return;
@@ -39,20 +40,23 @@ function WatchList() {
   useEffect(() => {
     const fetchSavedMovies = async () => {
       if (!user) return;
-
+  
+      setLoading(true);
       try {
         const userRef = doc(db, 'users', user.uid);
         const snapshot = await getDoc(userRef);
-
+  
         if (snapshot.exists()) {
           const data = snapshot.data();
           setSavedMovies(data.savedMovies || []);
         }
       } catch (err) {
         console.error("Error fetching saved movies:", err);
+      } finally {
+        setLoading(false);
       }
     };
-
+  
     fetchSavedMovies();
   }, [user]);
 
@@ -72,7 +76,83 @@ function WatchList() {
           <p className="placeholder">{savedMovies.length} movies saved</p>
         )}
 
-        {savedMovies.length > 0 ? (
+        {loading ? (
+          <div className="fav-cards">
+            {[...Array(3)].map((_, i) => (
+              <div className="fav-card skeleton" key={i}>
+                <div className="image-wrapper skeleton-box" />
+                <div className="genre-tag skeleton-text" />
+                <div className="movie-title skeleton-text" />
+                <div className="meta-info skeleton-text" />
+                <div className="card-details">
+                  <p className="overview skeleton-text" />
+                  <button className="primary-btn red skeleton-btn" disabled />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : savedMovies.length > 0 ? (
+          <div className="fav-cards">
+            {savedMovies.map((movie, index) => (
+              <div className="fav-card" key={index} onClick={() => navigate(`/moviedetail/${movie.id}`)}>
+                <div className="image-wrapper">
+                  <img
+                    src={
+                      movie.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                        : '/assets/img/movie-placeholder.png'
+                    }
+                    alt={movie.title}
+                  />
+                  <div className="genre-tag">{movie.genre || 'No genre found'}</div>
+                  <div className="movie-title">{movie.title}</div>
+                  <div className="meta-info">
+                    <span>
+                      <img src="/assets/icons/today.svg" alt="" className="icon" />
+                      {movie.release_date?.slice(0, 4)}
+                    </span>
+                    <span>
+                      <img src="/assets/icons/schedule.svg" alt="" className="icon" />
+                      {movie.runtime ? `${movie.runtime} min` : '—'}
+                    </span>
+                    <span>
+                      <img src="/assets/icons/star.svg" alt="" className="icon" />
+                      {movie.vote_average?.toFixed(1)}
+                    </span>
+                  </div>
+                </div>
+                <div className="card-details">
+                  <p className="overview">
+                    {movie.overview?.length > 120
+                      ? movie.overview.slice(0, 70) + '...'
+                      : movie.overview || 'No description available.'}
+                  </p>
+                  <button
+                    className="primary-btn red"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemove(movie);
+                    }}
+                  >
+                    <img src={`${iconPath}delete.svg`} alt="" className="icon" />
+                    Remove from watchlist
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="none-saved">
+            <img src={`${imgPath}watchlist.svg`} alt="" />
+            <h4>Your watchlist is empty</h4>
+            <p>Start liking movies to build your personal collection</p>
+            <button className="primary-btn" onClick={() => navigate('/movie')}>
+              Discover movies
+            </button>
+          </div>
+        )}
+
+        {/* {savedMovies.length > 0 ? (
           <div className="fav-cards">
             {savedMovies.map((movie, index) => (
               <div className="fav-card" key={index} onClick={() => navigate(`/moviedetail/${movie.id}`)}>
@@ -131,7 +211,7 @@ function WatchList() {
               Discover movies
             </button>
           </div>
-        )}
+        )} */}
       </div>
       {user && <Chatbot />}
       <ToastContainer 

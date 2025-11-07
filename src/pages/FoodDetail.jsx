@@ -76,7 +76,59 @@ function FoodDetail() {
     }
   };
 
-  if (!food) return <p>No recipe data available.</p>;
+  if (!food) {
+    return (
+      <div className="page">
+        <Sidebar />
+        <div className="food-detail">
+          <div className="header-row">
+            <h1 className="skeleton-text" style={{ width: '200px' }} />
+          </div>
+          <Link className="back" to="/foodlist">🡠 Back</Link>
+  
+          <div className="columns">
+            <div className="left-column">
+              <div className="image-wrapper skeleton-box" />
+              <div className="tag top-right skeleton-text" />
+            </div>
+  
+            <div className="right-column">
+              <h1 className="skeleton-text" style={{ width: '60%' }} />
+              <div className="meta-info2">
+                <span className="skeleton-text" style={{ width: '80px' }} />
+                <span className="skeleton-text" style={{ width: '80px' }} />
+              </div>
+              <h3 className="skeleton-text" style={{ width: '100px' }} />
+              <p className="synopsis skeleton-text" style={{ height: '60px' }} />
+              <div className="food-tags">
+                {[...Array(3)].map((_, i) => (
+                  <span key={i} className="skeleton-text" style={{ width: '80px' }} />
+                ))}
+              </div>
+              <div className="recipes-duration">
+                <p className="skeleton-text" style={{ width: '120px' }} />
+                <p className="skeleton-text" style={{ width: '120px' }} />
+              </div>
+              <button className="favorite-btn primary-btn skeleton-btn" disabled>Saving...</button>
+            </div>
+          </div>
+  
+          <div className="additional-info">
+            <h2 className="skeleton-text" style={{ width: '200px' }} />
+            <div className="recipe-section">
+              <h3 className="skeleton-text" style={{ width: '100px' }} />
+              <ul className="ingredients">
+                {[...Array(5)].map((_, i) => (
+                  <li key={i} className="skeleton-text" style={{ width: '80%' }} />
+                ))}
+              </ul>
+              <p className="recipe-link skeleton-text" style={{ width: '160px' }} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const isOrderOut = prepType?.toLowerCase() === "order out (fast food)";
   const isMakeAtHome = prepType?.toLowerCase() === "make it at home from scratch";
@@ -101,8 +153,8 @@ function FoodDetail() {
           <div className="right-column">
             <h1>{food.label}</h1>
             <div className="meta-info2">
-              <span>{selectedTime}</span>
-              <span>{prepType}</span>
+              <span className='tag2'>{selectedTime}</span>
+              <span className='tag2 green'>{prepType}</span>
             </div>
             <h3>Description</h3>
             <p className="synopsis">{food.source || 'No description available.'}</p>
@@ -112,7 +164,7 @@ function FoodDetail() {
               <span>{spiceLevel}</span>
             </div>
 
-            {isMakeAtHome && (
+            {isMakeAtHome && food.totalTime > 0 && (
               <div className="recipes-duration">
                 <img src={`${iconPath}schedule.svg`} alt="" className="icon" />
                 <p>
